@@ -1,8 +1,8 @@
-import { useState } from "react";
 import Flavor from "../model/Flavor";
 import FlavorDetails from "./FlavorDetails";
 import FlavorForm from "./FlavorForm";
 import FlavorList from "./FlavorList";
+import { useState } from "react";
 
 /* Task:
 Remember to use immutability:
@@ -18,53 +18,53 @@ Remember to use immutability:
 let nextId: number = 4;
 
 function FlavorParent() {
-  const [ flavors, setFlavors ] = useState<Flavor[]>([
+  const [ flavors, setFlavors ] = useState<Flavor[]>( [
     { id: 1, name: "Chocolate", color: "brown", votes: 0 },
     { id: 2, name: "Strawberry", color: "pink", votes: 0 },
     { id: 3, name: "Mint", color: "palegreen", votes: 0 },
-  ]);
+  ] );
 
-  function addFlavor(flavor: Flavor): void {
+  function addFlavor( flavor: Flavor ): void {
     const id = nextId++;
-    // TODO 1
+    flavor.id = id;
+    setFlavors( prev => [ ...prev, flavor ] );
   }
 
-  function upvoteFlavor(flavorId: number): void {
+  function upvoteFlavor( flavorId: number ): void {
     // TODO 2
   }
 
-  function getFlavorById(flavorId: number): Flavor|undefined {
-    // TODO 3
-    return undefined;
+  function getFlavorById( flavorId: number ): Flavor | undefined {
+    return flavors.find( match => match.id === flavorId );
   }
 
   function testAdd() {
-    addFlavor({name: "superman", color: "skyblue", votes: 0});
+    addFlavor( { name: "superman", color: "skyblue", votes: 0 } );
   }
   function testUpvote() {
-    upvoteFlavor(2);
+    upvoteFlavor( 2 );
   }
-  const flavor1 = getFlavorById(1) ?? flavors[0];
-  const flavor3 = getFlavorById(3) ?? flavors[0];
+  const flavor1 = getFlavorById( 1 ) ?? flavors[ 0 ];
+  const flavor3 = getFlavorById( 3 ) ?? flavors[ 0 ];
 
-  console.log(flavors);
-  console.log("#2 votes", flavors[1].votes);
-  console.log("flavor1", flavor1.name);
-  console.log("flavor3", flavor3.name);
+  console.log( flavors );
+  console.log( "#2 votes", flavors[ 1 ].votes );
+  console.log( "flavor1", flavor1.name );
+  console.log( "flavor3", flavor3.name );
 
   return (
     <div className="FlavorParent">
       <h3>Flavor List</h3>
-      <FlavorList flavors={flavors} />
+      <FlavorList flavors={ flavors } />
       <h3>Flavor Details #1</h3>
-      <FlavorDetails flavor={flavor1} onVote={upvoteFlavor} />
+      <FlavorDetails flavor={ flavor1 } onVote={ upvoteFlavor } />
       <h3>Flavor Details #3</h3>
-      <FlavorDetails flavor={flavor3} onVote={upvoteFlavor} />
+      <FlavorDetails flavor={ flavor3 } onVote={ upvoteFlavor } />
       <h3>Flavor Form</h3>
-      <FlavorForm onSubmit={addFlavor} />
+      <FlavorForm onSubmit={ addFlavor } />
       <h3>Testing...</h3>
-      <button onClick={testAdd}>Test Add</button>
-      <button onClick={testUpvote}>Test Upvote</button>
+      <button onClick={ testAdd }>Test Add</button>
+      <button onClick={ testUpvote }>Test Upvote</button>
     </div>
   );
 }
